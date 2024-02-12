@@ -10,6 +10,9 @@ export default function HomeTemplate() {
         <main className={`container mx-auto pt-16`}>
             <div className={`h-screen`}>
                 HomeTemplate
+                <div>
+                  <p>hola</p>
+                </div>
             </div>
         </main>
         <Footer/>
