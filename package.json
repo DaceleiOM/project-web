@@ -1,5 +1,5 @@
 {
-  "name": "intimatelook-web",
+  "name": "project-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
     "@ant-design/cssinjs": "^1.18.1",
     "@ant-design/icons": "^5.2.6",
     "antd": "^5.12.2",
+    "axios": "^1.6.7",
     "date-fns": "^2.30.0",
     "next": "14.0.4",
     "react": "^18",
