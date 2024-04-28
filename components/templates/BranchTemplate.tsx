@@ -7,10 +7,10 @@ import BranchService from "@/services/branchService";
 const branchService = new BranchService();
 
 export default function BranchTemplate( item : any) {
-  console.log(item.brandId)
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [dataSource, setDataSource] = useState<BranchInterface[]>([]);
-  
+  const [brandId, setBrandId] = useState<any>(item.brandId);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [dataSource, setDataSource] = useState<BranchInterface[]>([]);
+  console.log(item)
     const columns = [
       {
         dataIndex: "image",
@@ -32,24 +32,28 @@ export default function BranchTemplate( item : any) {
     ];
   
     const getData = () => {
-      branchService.getBranches(item.brandId)
+      branchService.getBranches(brandId)
           .then((response: any) => {
               setDataSource(response);
               setIsLoading(false);
           })
           .catch((error) => {
-            console.log("esto es un error => ", error);
+            console.log("Error fetching branches:", error);
             setDataSource([]);
             setIsLoading(false);
           });
     } 
-    useEffect(() => {
-      getData();
-    }, [item.brandId]);
-    
-    console.log(dataSource)
 
+        // Se ejecuta cuando cambia el brandId
+        useEffect(() => {
+          setBrandId(item.brandId); // Actualiza el brandId en el estado
+        }, [item.brandId]);
     
+        // Se ejecuta cuando cambia el brandId o cuando se monta el componente
+        useEffect(() => {
+          getData();
+        }, [brandId]);
+
     return (
       <div className={`w-full flex flex-col gap-4`}>
         <div className={`lg:text-2xl font-bold`}>sucursales</div>
