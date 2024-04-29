@@ -100,7 +100,6 @@ export default function BrandTemplate() {
       {
         isOpenModal && (
         <Modal 
-          title={<div className={`text-lg lg:text-xl`}>'tittle'</div>}
           open={isOpenModal}
           confirmLoading={loading}
           classNames={
