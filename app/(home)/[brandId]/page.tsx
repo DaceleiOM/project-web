@@ -28,7 +28,7 @@ export default function Product({ params }: { params: { brandId: string } }) {
   } = theme.useToken();
 //__________________________________________________________________________________________________________________________
   
-  const items = categories.map((category, index) => ({
+  const items = categories.map((category) => ({
     key: category.id,
     label: category.name,
     onClick: () => {
@@ -50,9 +50,6 @@ export default function Product({ params }: { params: { brandId: string } }) {
       });
   } 
 
-  useEffect(() => {
-    getData();
-  }, [params.brandId]);
 //__________________________________________________________________________________________________________________________
   const getCategories = () => {
     brandCategoryService.getByBrand(params.brandId)
@@ -68,8 +65,10 @@ export default function Product({ params }: { params: { brandId: string } }) {
   } 
 
   useEffect(() => {
+    getData();
     getCategories();
   }, [params.brandId]);
+
 //__________________________________________________________________________________________________________________________
 
   const closeModal = async () => {
@@ -91,6 +90,7 @@ export default function Product({ params }: { params: { brandId: string } }) {
             style={{ flex: 1, minWidth: 0 }}
           />
       </Header>
+
       <Content style={{ padding: '0 48px' }}>
         <div
           style={{
