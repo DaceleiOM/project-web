@@ -79,7 +79,7 @@ export default function BrandTemplate() {
   return (
     <div className={`w-full flex flex-col gap-4`}>
       <div className={`lg:text-2xl font-bold`}>Productos</div>
-      <div className={`bg-white rounded-lg flex flex-col px-5 pt-5`}>
+      <div className={`bg-white rounded-lg flex flex-col px-5 pt-5 h-screen`}>
         <div className={`w-full flex items-center justify-end gap-2 pb-2`}>
           <Button 
             size="large"
@@ -89,13 +89,14 @@ export default function BrandTemplate() {
               setIsOpenModal(true);
             }}
           >
-              Nuevo
+            Nuevo
           </Button>
         </div>
-        <div>
-          <Table bordered scroll={{y: 450}} size="small" loading={isLoading} dataSource={dataSource} columns={columns} />
+        <div className="flex-grow">
+          <Table bordered scroll={{ y: 'calc(100vh - 200px)' }} size="small" loading={isLoading} dataSource={dataSource} columns={columns} />
         </div>
       </div>
+
 
       {
         isOpenModal && (

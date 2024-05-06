@@ -13,5 +13,18 @@ export default class BrandService {
             reject(error);
         });
      });
+
+     public getById = (id: string | undefined) =>
+      new Promise((resolve, reject) => {
+        apiService(`/brand/getById/${id}`, "GET")
+          .then((response) => {
+            if (response?.data) {
+              resolve(response?.data);
+            }
+          })
+          .catch((error) => {
+            reject(error);
+        });
+     });
 }
   
