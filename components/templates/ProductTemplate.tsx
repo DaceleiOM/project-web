@@ -41,8 +41,7 @@ export default function ProductTemplate( item : any) {
 
   
   return (
-    <div className={`w-full flex flex-col gap-4`}>
-
+    <div className={`w-full flex flex-col gap-4 justify-center items-center`}>
       {dataSource.map((product) => (
         <Card
           key={product.id}
@@ -55,7 +54,7 @@ export default function ProductTemplate( item : any) {
             description={
               <>
                 <p>{product.description}</p>
-                <p>Precio: {product.price}</p>
+                <p style={{ fontWeight: 'bold', fontSize: '1.2em' }}>Precio: {product.price && new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(parseFloat(product.price))}</p>
               </>
             }
             style={{ textAlign: 'center' }}
@@ -64,4 +63,5 @@ export default function ProductTemplate( item : any) {
       ))}
     </div>
   );
+  
 }

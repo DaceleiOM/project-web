@@ -4,7 +4,7 @@ import { BranchInterface } from "@/interfaces/branchInterface";
 
 export default class BranchService {
   // Get brand by id
-  public getBranches = (id: number | undefined) =>
+  public getBranches = (id: string | undefined) =>
     new Promise<BranchInterface | null>((resolve, reject) => {
       if (id === undefined) {
         resolve(null); // Devuelve null cuando id es undefined
