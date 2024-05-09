@@ -16,12 +16,6 @@ export default function BranchTemplate( item : any) {
 
   const columns = [
     {
-      dataIndex: "image",
-      key: "image",
-      width: "10%",
-      render: (image: string) => <img src={image} alt="image" style={{ maxWidth: '100%', maxHeight: '100%' }} />,
-    },
-    {
       dataIndex: "name",
       key: "name",
       width: "30%",
@@ -33,15 +27,19 @@ export default function BranchTemplate( item : any) {
     },
     {
       render: (record: any) => (
-        <Button
-          onClick={() => {
-            router.push(`/${record.brand_id}`);
-          }}
-        >
-          Ir a tienda
-        </Button>
+        <div style={{ width: "100%" }}>
+          <Button
+            onClick={() => {
+              router.push(`/${record.brand_id}`);
+            }}
+            style={{ width: "100%" }} // Establecer el ancho del botón al 100%
+          >
+            Ir
+          </Button>
+        </div>
       ),
     },
+    
 
   ];
   
@@ -63,26 +61,26 @@ export default function BranchTemplate( item : any) {
   }, [item.brandId]);
     
   useEffect(() => {
-          getData();
+    getData();
   }, [brandId]);
 
   return (
-    <div className={`w-full flex flex-col gap-4`}>
-      <div className={`lg:text-2xl font-bold`}>sucursales</div>
-      <div className={`bg-white rounded-lg flex flex-col px-5 pt-5`} style={{ overflowX: 'hidden' }}>
-        <div className={`w-full flex items-center justify-end gap-2 pb-2`}></div>
-        <div>
+    <div className="w-full h-full flex flex-col justify-center items-center">
+      <div className="lg:text-2xl font-bold">sucursales</div>
+      <div className="bg-white rounded-lg flex flex-col px-5 pt-5 w-full max-w-full overflow-x-hidden">
+        <div className="w-full flex items-center justify-end gap-2 pb-2"></div>
+        <div className="flex-grow w-full overflow-auto">
           <Table
             bordered
             size="small"
             loading={isLoading}
             dataSource={dataSource}
             columns={columns}
-            style={{ width: '500px' }} // Ajustar al ancho del contenedor
-           />
+          />
         </div>
       </div>
     </div>
+
   );
           
 }

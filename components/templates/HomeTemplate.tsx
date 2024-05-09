@@ -29,7 +29,11 @@ export default function BrandTemplate() {
       dataIndex: "name",
       key: "name",
       width: "30%",
+      render: (text: any) => (
+        <span style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', display: 'block' }}>{text}</span>
+      ),
     },
+    
     {
       dataIndex: "description",
       key: "description",
@@ -47,6 +51,8 @@ export default function BrandTemplate() {
             setSelectedItem(record.id);
             setIsOpenModal(true);
           }}
+          style={{ background: 'orange', color: 'white' }} // Establecer estilos de fondo y color de texto
+
         >
           sucursales
         </Button>
@@ -78,49 +84,34 @@ export default function BrandTemplate() {
 
   return (
     <div className={`w-full flex flex-col gap-4`}>
-      <div className={`lg:text-2xl font-bold`}>Productos</div>
       <div className={`bg-white rounded-lg flex flex-col px-5 pt-5 h-screen`}>
-        <div className={`w-full flex items-center justify-end gap-2 pb-2`}>
-          <Button 
-            size="large"
-            onClick={() => { 
-              setAction("new");
-              setSelectedItem(undefined);
-              setIsOpenModal(true);
-            }}
-          >
-            Nuevo
-          </Button>
-        </div>
-        <div className="flex-grow">
-          <Table bordered scroll={{ y: 'calc(100vh - 200px)' }} size="small" loading={isLoading} dataSource={dataSource} columns={columns} />
+        <div className="flex-grow" style={{ height: 'calc(100vh - 200px)' }}>
+          <Table
+            bordered
+            size="small"
+            loading={isLoading}
+            dataSource={dataSource}
+            columns={columns}
+            scroll={{ y: '100%' }} // Asegúrate de que el contenido de la tabla se desplace verticalmente si es necesario
+          />
         </div>
       </div>
 
 
       {
         isOpenModal && (
-        <Modal 
+          <Modal 
           open={isOpenModal}
           confirmLoading={loading}
-          classNames={
-            {
-              header:`flex justify-content-center items-center`, 
-              body:`h-[500px] overflow-auto`
-            }
-          }
+          classNames={{
+            header: `flex justify-content-center items-center`, 
+            body: `h-[500px] overflow-auto`
+          }}
           className={`!w-full !top-4 lg:!w-[600px] lg:!top-8`}
           keyboard={false}
           maskClosable={false}
-          okButtonProps={
-            {className: `!h-10 !bg-blue-500 hover:!opacity-60 hover:!text-white text-white`}
-          }
-          okText={`Guardar`}
-          cancelButtonProps={
-            {className: `!h-10 !bg-red-500 hover:!opacity-60 hover:!text-white hover:!border-red-500 text-white`}
-          }
-          cancelText={`Cancelar`}
-          onCancel={closeModal}
+          onOk={closeModal}
+          cancelButtonProps={{ style: { display: 'none' } }}
         >
           
           <BranchTemplate brandId={selectedItem} />

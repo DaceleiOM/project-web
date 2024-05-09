@@ -15,7 +15,7 @@ const productCategoryService = new ProductCategoryService();
 
 
 export default function ProductCategoryTemplate(data: any) {
-  const BrandId = data.data.brandId
+  const infoBranch = data.data.branchData[0]
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [dataSource, setDataSource] = useState<any[]>([]);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -41,13 +41,13 @@ export default function ProductCategoryTemplate(data: any) {
             </div>
         </div>
     );
-};
+  };
 
 
-//__________________________________________________________________________________________________________________________
-const {
+  //__________________________________________________________________________________________________________________________
+  const {
     token: { colorBgContainer, borderRadiusLG },
-    } = theme.useToken();
+  } = theme.useToken();
     //__________________________________________________________________________________________________________________________
 
     useEffect(() => {
@@ -74,7 +74,7 @@ const {
         };
       
         fetchData();
-      }, [data.data.categoryId, data.data.brandId]);
+    }, [data.data.categoryId, data.data.brandId]);
       
 
     //__________________________________________________________________________________________________________________________
@@ -170,13 +170,13 @@ const {
                     <img src={data.data.brandData.logo} alt="Brand Logo" style={{ width: 'auto', height: '150px', marginTop: '20px' }} />
                   )}
                   <div className="flex mt-4 space-x-4">
-                      <a href={data.data.branchData.facebook} target="_blank" rel="noopener noreferrer">
+                      <a href={`https://www.facebook.com/${infoBranch.facebook}`} target="_blank" rel="noopener noreferrer">
                         <FacebookOutlined style={{ fontSize: '24px', color: '#3b5998' }} />
                       </a>
-                      <a href={data.data.branchData.instagram} target="_blank" rel="noopener noreferrer">
+                      <a href={`https://www.instagram.com/${infoBranch.instagram}`} target="_blank" rel="noopener noreferrer">
                         <InstagramOutlined style={{ fontSize: '24px', color: '#e4405f' }} />
                       </a>
-                      <a href={`https://api.whatsapp.com/send?phone=${data.data.branchData.whatsapp}&text=Hola`} target="_blank" rel="noopener noreferrer">
+                      <a href={`https://api.whatsapp.com/send?phone=${infoBranch.phone}&text=Hola`} target="_blank" rel="noopener noreferrer">
                         <WhatsAppOutlined style={{ fontSize: '24px', color: '#25D366' }} />
                       </a>
                   </div>
