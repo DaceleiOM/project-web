@@ -1,10 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button, Dropdown, MenuProps, Modal, Space, Table, Tag } from "antd";
+import { Button, Modal, Table} from "antd";
 import { BrandInterface } from "@/interfaces/brandInterface";
 import BrandService from "@/services/brandService";
 import BranchTemplate from '@/components/templates/BranchTemplate'
-import { BranchInterface } from "@/interfaces/branchInterface";
 
 const brandService = new BrandService();
 
@@ -22,34 +21,41 @@ export default function BrandTemplate() {
     {
       dataIndex: "logo",
       key: "logo",
-      width: "10%", // Ajusta el ancho según sea necesario
+      width: "15%", // Ajusta el ancho según sea necesario
       render: (logo: string) => <img src={logo} alt="Logo" style={{ maxWidth: '100%', maxHeight: '100%' }} />,
     },
     {
       dataIndex: "name",
       key: "name",
-      width: "30%",
+      width: "15%",
+      render: (text: string) => (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          {text}
+        </div>
+      ),
     },
     {
       dataIndex: "description",
       key: "description",
-      width: "30%",
+      width: "50%",
     },
     {
       title: "",
       dataIndex: "",
-      width: "8%",
+      width: "25%",
       render: (record: any) => (
-        <Button
-          size="large"
-          onClick={() => {
-            setAction("new");
-            setSelectedItem(record.id);
-            setIsOpenModal(true);
-          }}
-        >
-          sucursales
-        </Button>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <Button
+            size="large"
+            onClick={() => {
+              setAction("new");
+              setSelectedItem(record.id);
+              setIsOpenModal(true);
+            }}
+          >
+            sucursales
+          </Button>
+        </div>
       ),
     },
   ];
@@ -78,21 +84,8 @@ export default function BrandTemplate() {
 
   return (
     <div className={`w-full flex flex-col gap-4`}>
-      <div className={`lg:text-2xl font-bold`}>Productos</div>
       <div className={`bg-white rounded-lg flex flex-col px-5 pt-5 h-screen`}>
-        <div className={`w-full flex items-center justify-end gap-2 pb-2`}>
-          <Button 
-            size="large"
-            onClick={() => { 
-              setAction("new");
-              setSelectedItem(undefined);
-              setIsOpenModal(true);
-            }}
-          >
-            Nuevo
-          </Button>
-        </div>
-        <div className="flex-grow">
+        <div className="flex-grow ">
           <Table bordered scroll={{ y: 'calc(100vh - 200px)' }} size="small" loading={isLoading} dataSource={dataSource} columns={columns} />
         </div>
       </div>
@@ -100,31 +93,22 @@ export default function BrandTemplate() {
 
       {
         isOpenModal && (
-        <Modal 
+          <Modal 
           open={isOpenModal}
           confirmLoading={loading}
-          classNames={
-            {
-              header:`flex justify-content-center items-center`, 
-              body:`h-[500px] overflow-auto`
-            }
-          }
+          classNames={{
+            header: `flex justify-content-center items-center`, 
+            body: `h-[300px] overflow-auto`
+          }}
           className={`!w-full !top-4 lg:!w-[600px] lg:!top-8`}
           keyboard={false}
           maskClosable={false}
-          okButtonProps={
-            {className: `!h-10 !bg-blue-500 hover:!opacity-60 hover:!text-white text-white`}
-          }
-          okText={`Guardar`}
-          cancelButtonProps={
-            {className: `!h-10 !bg-red-500 hover:!opacity-60 hover:!text-white hover:!border-red-500 text-white`}
-          }
-          cancelText={`Cancelar`}
+          onOk={closeModal}
           onCancel={closeModal}
+          cancelButtonProps={{ style: { display: 'none' } }}
         >
           
-          <BranchTemplate brandId={selectedItem} />
-
+        <BranchTemplate brandId={selectedItem} />
         </Modal>
         )
       }

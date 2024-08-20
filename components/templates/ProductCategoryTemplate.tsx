@@ -76,7 +76,7 @@ const {
         fetchData();
       }, [data.data.categoryId, data.data.brandId]);
       
-
+      console.log(data.data.branchData)
     //__________________________________________________________________________________________________________________________
     
     const closeModal = async () => {
@@ -86,114 +86,122 @@ const {
     //__________________________________________________________________________________________________________________________
       
       
-  return (
-    <Layout>
-      <MenuCategories data={{ brandId: data.data.brandId, brandData: data.data.brandData, branchData: data.data.branchData }} />
-            
-      <Content style={{ padding: '0 48px' }}>
-        <div
-                style={{
-                  background: colorBgContainer,
-                  minHeight: 280,
-                  padding: 24,
-                  borderRadius: borderRadiusLG,
-                }}
-                >
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-                  {dataSource && dataSource.map((product) => (
-                            <Card
-                                key={product.id}
-                                hoverable
-                                style={{ width: 240 }}
-                                cover={<img alt={product.name} src={product.images} />}
-                                onClick={() => {
-                                    setSelectedItem(product.id);
-                                    setIsOpenModal(true);
-                                }}
-                            >
-                                <Meta title={product.name} style={{ textAlign: 'center' }}/>
-                            </Card>
-                  ))}
-
-                  {isOpenModal && (
-                          <Modal 
-                            open={isOpenModal}
-                            confirmLoading={loading}
-                            classNames={{
-                              header: `flex justify-content-center items-center`, 
-                              body: `h-[500px] overflow-auto`
-                            }}
-                            className={`!w-full !top-4 lg:!w-[600px] lg:!top-8`}
-                            keyboard={false}
-                            maskClosable={false}
-                            onOk={closeModal}
-                            cancelButtonProps={{ style: { display: 'none' } }}
-                          >
-                            <ProductTemplate productId={selectedItem} />
-                          </Modal> 
-                  )}    
-                </div>
-
-        </div>
-
-      </Content>
-      <a 
-        href={`https://api.whatsapp.com/send?phone=${data.data.branchData.whatsapp}&text=Hola`} 
-        target="_blank" 
-        rel="noopener noreferrer" 
-        style={{
-          position: 'fixed',
-          bottom: '20%', /* Distancia desde la parte inferior */
-          right: '5%', /* Centrado horizontalmente */
-          transform: 'translateX(50%)', /* Centrar horizontalmente */
-          zIndex: 9999 
-        }}
-      >
-        <WhatsAppOutlined style={{ fontSize: '32px', color: '#25D366' }} />
-      </a>
-            
-      <Footer style={{ background: '#333', color: '#fff', textAlign: 'center', padding: '10px' }}>
-              <div className="flex flex-1 justify-center">
-                
-                {/* izquierda */}
-                <div className="w-1/3">
-                  <div style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}>Nosotros:</div>
-                  <div className="text-justify" style={{ marginTop: '8px', fontWeight: 'bold' }}>Nombre:</div>
-                  <div className="text-justify">{data.data.brandData.name}</div>
-                  <div className="text-justify" style={{ marginTop: '8px', fontWeight: 'bold' }}>Lo que nos gusta:</div>
-                  <div className="text-justify">{data.data.brandData.description}</div>
-                </div>
+    return (
+      <Layout style={{ minHeight: '100vh' }}> {/* Asegura que el Layout ocupe al menos la altura completa de la pantalla */}
+        <MenuCategories data={{ brandId: data.data.brandId, brandData: data.data.brandData, branchData: data.data.branchData }} />
         
-                {/* centro */}
-                <div className="w-1/3 flex flex-col justify-center items-center">
-                  {data.data.brandData.logo && (
-                    <img src={data.data.brandData.logo} alt="Brand Logo" style={{ width: 'auto', height: '150px', marginTop: '20px' }} />
-                  )}
-                  <div className="flex mt-4 space-x-4">
-                      <a href={data.data.branchData.facebook} target="_blank" rel="noopener noreferrer">
-                        <FacebookOutlined style={{ fontSize: '24px', color: '#3b5998' }} />
-                      </a>
-                      <a href={data.data.branchData.instagram} target="_blank" rel="noopener noreferrer">
-                        <InstagramOutlined style={{ fontSize: '24px', color: '#e4405f' }} />
-                      </a>
-                      <a href={`https://api.whatsapp.com/send?phone=${data.data.branchData.whatsapp}&text=Hola`} target="_blank" rel="noopener noreferrer">
-                        <WhatsAppOutlined style={{ fontSize: '24px', color: '#25D366' }} />
-                      </a>
-                  </div>
-                </div>
-
-
-                {/* derecha */}
-                <div className="w-1/3">
-                    <div style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}>Nuestras sucursales:</div>
-                    {data.data.branchData?.map((branchData: BranchInterface) => (
-                        renderBranchDetails(branchData)
-                    ))}
-                </div>
-
-              </div>      
-      </Footer>
+        <Content style={{ padding: '0 48px', display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 80px)' }}> {/* Ajusta el padding y el minHeight */}
+          <div
+            style={{
+              background: colorBgContainer,
+              minHeight: 280,
+              padding: 24,
+              borderRadius: borderRadiusLG,
+              flex: 1, // Permite que el contenido principal crezca para llenar el espacio disponible
+            }}
+          >
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+              {dataSource && dataSource.map((product) => (
+                <Card
+                  key={product.id}
+                  hoverable
+                  style={{ width: 240 }}
+                  cover={<img alt={product.name} src={product.images} />}
+                  onClick={() => {
+                    setSelectedItem(product.id);
+                    setIsOpenModal(true);
+                  }}
+                >
+                  <Meta title={product.name} style={{ textAlign: 'center' }} />
+                </Card>
+              ))}
   
-    </Layout>
-  );
+              {isOpenModal && (
+                <Modal 
+                  open={isOpenModal}
+                  confirmLoading={loading}
+                  classNames={{
+                    header: `flex justify-content-center items-center`, 
+                    body: `h-[500px] overflow-auto`
+                  }}
+                  className={`!w-full !top-4 lg:!w-[600px] lg:!top-8`}
+                  keyboard={false}
+                  maskClosable={false}
+                  onOk={closeModal}
+                  onCancel={closeModal}
+                  cancelButtonProps={{ style: { display: 'none' } }}
+                >
+                  <ProductTemplate productId={selectedItem} />
+                </Modal> 
+              )}
+            </div>
+          </div>
+        </Content>
+        
+        <a 
+          href={`https://api.whatsapp.com/send?phone=${data.data.branchData.whatsapp}&text=Hola`} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          style={{
+            position: 'fixed',
+            bottom: '20%', /* Distancia desde la parte inferior */
+            right: '5%', /* Centrado horizontalmente */
+            transform: 'translateX(50%)', /* Centrar horizontalmente */
+            zIndex: 9999 
+          }}
+        >
+          <WhatsAppOutlined style={{ fontSize: '32px', color: '#25D366' }} />
+        </a>
+              
+        <Footer style={{ background: '#333', color: '#fff', textAlign: 'center', padding: '10px' }}>
+          <div className="flex flex-1 justify-center">
+            {/* izquierda */}
+            <div className="w-1/3">
+              <div style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}>Nosotros:</div>
+              <div className="text-justify" style={{ marginTop: '8px', fontWeight: 'bold' }}>Nombre:</div>
+              <div className="text-justify">{data.data.brandData.name}</div>
+              <div className="text-justify" style={{ marginTop: '8px', fontWeight: 'bold' }}>Lo que nos gusta:</div>
+              <div className="text-justify">{data.data.brandData.description}</div>
+            </div>
+            
+            {/* centro */}
+            <div className="w-1/3 flex flex-col justify-center items-center">
+              {data.data.brandData.logo && (
+                <img src={data.data.brandData.logo} alt="Brand Logo" style={{ width: 'auto', height: '150px', marginTop: '20px' }} />
+              )}
+              
+              {data.data.branchData.map((branch:any) => (
+                <div key={branch.id} className="flex mt-4 space-x-4">
+                  {branch.facebook && (
+                    <a href={branch.facebook} target="_blank" rel="noopener noreferrer">
+                      <FacebookOutlined style={{ fontSize: '24px', color: '#3b5998' }} />
+                    </a>
+                  )}
+                  {branch.instagram && (
+                    <a href={branch.instagram} target="_blank" rel="noopener noreferrer">
+                      <InstagramOutlined style={{ fontSize: '24px', color: '#e4405f' }} />
+                    </a>
+                  )}
+                  {branch.phone && (
+                    <a href={`https://api.whatsapp.com/send?phone=${branch.phone}&text=Hola`} target="_blank" rel="noopener noreferrer">
+                      <WhatsAppOutlined style={{ fontSize: '24px', color: '#25D366' }} />
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+
+
+  
+            {/* derecha */}
+            <div className="w-1/3">
+              <div style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}>Nuestras sucursales:</div>
+              {data.data.branchData?.map((branchData: BranchInterface) => (
+                renderBranchDetails(branchData)
+              ))}
+            </div>
+          </div>
+        </Footer>
+      </Layout>
+    );
 }
