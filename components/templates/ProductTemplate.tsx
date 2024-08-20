@@ -45,9 +45,19 @@ export default function ProductTemplate( item : any) {
       {dataSource.map((product) => (
         <Card
           key={product.id}
-          hoverable
           style={{ width: '100%' }} // Ajustar al ancho del contenedor
-          cover={<img alt={product.name} src={product.images} />}
+          cover={
+            <img
+              alt={product.name}
+              src={product.images}
+              style={{
+                minHeight: '200px', // Altura mínima de la imagen
+                maxHeight: '350px', // Altura máxima de la imagen
+                objectFit: 'cover', // Mantiene la imagen dentro de los límites definidos
+                width: '100%' // Asegura que la imagen ocupe todo el ancho del contenedor
+              }}
+            />
+          } 
         >
           <Meta
             title={product.name}

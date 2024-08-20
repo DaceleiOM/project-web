@@ -16,30 +16,28 @@ export default function BranchTemplate( item : any) {
 
   const columns = [
     {
-      dataIndex: "image",
-      key: "image",
-      width: "10%",
-      render: (image: string) => <img src={image} alt="image" style={{ maxWidth: '100%', maxHeight: '100%' }} />,
-    },
-    {
+      title: "Sucursal",
       dataIndex: "name",
       key: "name",
       width: "30%",
     },
     {
+      title: "Dirección",
       dataIndex: "address",
       key: "address",
       width: "30%",
     },
     {
       render: (record: any) => (
-        <Button
-          onClick={() => {
-            router.push(`/${record.brand_id}`);
-          }}
-        >
-          Ir a tienda
-        </Button>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <Button
+            onClick={() => {
+              router.push(`/${record.brand_id}`);
+            }}
+          >
+            Ir a tienda
+          </Button>
+        </div>
       ),
     },
 
@@ -68,10 +66,9 @@ export default function BranchTemplate( item : any) {
 
   return (
     <div className={`w-full flex flex-col gap-4`}>
-      <div className={`lg:text-2xl font-bold`}>sucursales</div>
       <div className={`bg-white rounded-lg flex flex-col px-5 pt-5`} style={{ overflowX: 'hidden' }}>
         <div className={`w-full flex items-center justify-end gap-2 pb-2`}></div>
-        <div>
+        <div className="p-4"> {/* Añadido padding al contenedor */}
           <Table
             bordered
             size="small"
@@ -79,10 +76,11 @@ export default function BranchTemplate( item : any) {
             dataSource={dataSource}
             columns={columns}
             style={{ width: '500px' }} // Ajustar al ancho del contenedor
-           />
+          />
         </div>
       </div>
     </div>
   );
+  
           
 }
