@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import BrandCategoryService from "@/services/BrandCategoryService";
 
-import { Card,Layout, Menu} from 'antd';
+import { Card,Layout, Menu, Dropdown, Space} from 'antd';
 import { useRouter } from "next/navigation";
 import { Button } from 'antd';
+import { MenuOutlined, MoreOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 const { Header, Content, Footer } = Layout;
@@ -74,37 +75,56 @@ export default function MenuCategories( data: any ) {
         getCategories();
     }, [BrandId]);
     // __________________________________________________________________________________________________________________________
-
+    const moreMenu = (
+        <Menu>
+          {items}
+        </Menu>
+    );
     return (
-        <Header style={{ display: 'flex', alignItems: 'center', background: '#333', color: '#fff', height: '80px' }}>
+        <Header style={{ display: 'flex', alignItems: 'center', background: '#333', color: '#fff', height: '80px', padding: '0 10px' }}>
             {/* Elemento de la izquierda */}
-            <div className="flex flex-1">
+            <div style={{ flex: 1, overflowX: 'auto' }}>
                 <Menu
-                    theme="dark"
                     mode="horizontal"
                     defaultSelectedKeys={['2']}
-                    style={{ minWidth: '370px', background: '#333', fontSize: '16px' }}
+                    style={{
+                        whiteSpace: 'nowrap',
+                        overflowX: 'auto',
+                        overflowY: 'hidden', // Evita el scroll vertical
+                        backgroundColor: '#333',
+                        color: '#fff',
+                        height: '80px', // Ajusta según sea necesario
+                        lineHeight: '80px', // Alinea verticalmente el contenido
+                    }}
                 >
-                    {items}
+                    {/* Mostrar los tres puntos si hay más elementos de los que se pueden mostrar */}
+                    {items.length > 5 ? (
+                        <Dropdown overlay={moreMenu} trigger={['click']}>
+                            <Button
+                                style={{ background: 'transparent', border: 'none', color: '#fff', fontSize: '16px' }}
+                                icon={<MoreOutlined />}
+                            />
+                        </Dropdown>
+                    ) : (
+                        items
+                    )}
                 </Menu>
-                <Button onClick={handleAllCategories} type="primary" style={{ marginTop: '15px' }}>Todas</Button>
             </div>
-
-
+        
             {/* Elemento del centro */}
-            <div className="flex flex-1 justify-center"></div>
-
+            <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}></div>
+        
             {/* Elemento de la derecha */}
-            <div>
+            <div
+                onClick={handleAllCategories}
+                style={{ cursor: 'pointer', marginLeft: 'auto' }}
+            >
                 {data.data.brandData.logo && (
-                <img src={data.data.brandData.logo} alt="Brand Logo" style={{ width: 'auto', height: '90px' }} />
+                <img src={data.data.brandData.logo} alt="Brand Logo" style={{ width: 'auto', height: '60px' }} />
                 )}
             </div>
         </Header>
-
-
-
-    );
+    ) ;
 
 
 }

@@ -21,13 +21,13 @@ export default function BrandTemplate() {
     {
       dataIndex: "logo",
       key: "logo",
-      width: "15%", // Ajusta el ancho según sea necesario
+      width: 15, // Ajusta el ancho según sea necesario
       render: (logo: string) => <img src={logo} alt="Logo" style={{ maxWidth: '100%', maxHeight: '100%' }} />,
     },
     {
       dataIndex: "name",
       key: "name",
-      width: "15%",
+      width: 15,
       render: (text: string) => (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           {text}
@@ -35,14 +35,15 @@ export default function BrandTemplate() {
       ),
     },
     {
-      dataIndex: "description",
+      dataIndex: "description", 
       key: "description",
-      width: "50%",
+      width: 50,
+      className: "hidden sm:table-cell", // Oculta la columna en móviles (pantallas pequeñas)
     },
     {
       title: "",
       dataIndex: "",
-      width: "25%",
+      width: 25,
       render: (record: any) => (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           <Button
@@ -84,11 +85,23 @@ export default function BrandTemplate() {
 
   return (
     <div className={`w-full flex flex-col gap-4`}>
-      <div className={`bg-white rounded-lg flex flex-col px-5 pt-5 h-screen`}>
-        <div className="flex-grow ">
-          <Table bordered scroll={{ y: 'calc(100vh - 200px)' }} size="small" loading={isLoading} dataSource={dataSource} columns={columns} />
+      <div className={`bg-white rounded-lg flex flex-col px-3 pt-3 sm:px-5 sm:pt-5 h-screen`}>
+        <div className="flex-grow overflow-x-auto">
+          <Table
+            bordered
+            scroll={{ x: 800, y: 'calc(100vh - 200px)' }} // Ajuste para permitir desplazamiento horizontal en pantallas pequeñas
+            size="small"
+            loading={isLoading}
+            dataSource={dataSource}
+            columns={columns}
+            pagination={{
+              pageSize: 5, // Muestra menos filas por página en móviles
+              responsive: true, // Habilita la paginación responsive
+            }}
+          />
         </div>
       </div>
+
 
 
       {
